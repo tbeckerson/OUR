@@ -1,0 +1,42 @@
+[info] 
+name = linux
+version = 6.8.8
+type = src
+license = GPL2
+url = https://mirrors.edge.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz
+sha256 = 1c4cdcb9d560fad1fb95db2cb8afbedc922f9ead848371fe40363b13f9f631ba
+
+[description] 
+The Linux kernel is a free and open-source, monolithic, modular, multitasking, Unix-like operating system kernel.
+
+[download]
+curl -L $URL --output linux-$VERSION.tar.xz
+tar xf linux-$VERSION.tar.xz
+
+[inputs]
+Do you want to configure your kernel or load a pre-made config? If no, a full generic version will be used otherwise (long install time). (y/n)
+
+[install]
+# either start menuconfig, or grab generic from web
+if [[ "$INPUT_0" == [Y/y]* ]]; then
+    make menuconfig
+else
+    cp $SOVIET_REPOS_DIR/OUR/base/patch/config-soviet-$VERSION .config
+    make oldconfig
+fi
+# make the kernel
+make $MAKE_FLAGS all 
+make DESTDIR=$BUILD_ROOT INSTALL_MOD_PATH="/usr" INSTALL_MOD_STRIP=1 modules_install
+# copy the kernel, System.map, and config to /usr/lib/modules/*/
+cp arch/x86/boot/bzImage /usr/lib/modules/$VERSION/vmlinuz-soviet
+cp System.map /usr/lib/modules/$VERSION/System.map-soviet
+cp .config /usr/lib/modules/$VERSION/config-soviet-$VERSION
+# Now that we've made a new kernel, we need to create the initrd and uki
+echo 'Generating initrd and unified kernel image! Please be patient.'
+sleep 2
+# first the initrd
+dracut --host-only --kver $VERSION --add-drivers ' overlay ' --strip -I ' /usr/bin/nano ' /usr/lib/modules/$VERSION/initrd-soviet.img
+# then the uki
+# give this efi file a unique name, for sysupdate and keeping multiple versions
+BUILD="$(date +%y%m%d%H%M)"
+ukify build --linux=/usr/lib/modules/$VERSION/vmlinuz-soviet --initrd=/usr/lib/modules/$VERSION/initrd-soviet.img --uname=$VERSION --cmdline=@/etc/kernel/cmdline --splash=/efi/logo-soviet-boot.bmp --output=/efi/EFI/Linux/sovietlinux-$BUILD.efi
