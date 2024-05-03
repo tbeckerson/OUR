@@ -27,11 +27,13 @@ fi
 # make the kernel
 make $MAKE_FLAGS all 
 make DESTDIR=$BUILD_ROOT INSTALL_MOD_PATH="/usr" INSTALL_MOD_STRIP=1 modules_install
+
+[special]
 # copy the kernel, System.map, and config to /usr/lib/modules/*/
 cp arch/x86/boot/bzImage /usr/lib/modules/$VERSION/vmlinuz-soviet
 cp System.map /usr/lib/modules/$VERSION/System.map-soviet
 cp .config /usr/lib/modules/$VERSION/config-soviet-$VERSION
-# Now that we've made a new kernel, we need to create the initrd and uki
+# Now that we've made a new kernel, we need to create the initrd and uki so it actually gets used
 echo 'Generating initrd and unified kernel image! Please be patient.'
 sleep 2
 # first the initrd
