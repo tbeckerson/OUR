@@ -1,17 +1,17 @@
 [info] 
 name = linux
-version = 6.8.8
+version = 6.8.9
 type = src
 license = GPL2
-url = https://mirrors.edge.kernel.org/pub/linux/kernel/v6.x/linux-$VERSION.tar.xz
-sha256 = 1c4cdcb9d560fad1fb95db2cb8afbedc922f9ead848371fe40363b13f9f631ba
+url = https://mirrors.edge.kernel.org/pub/linux/kernel/v6.x/$NAME-$VERSION.tar.xz
+sha256 = f905f1238ea7a8e85314bacf283302e8097006010d25fcea726d0de0ea5bc9b6
 
 [description] 
 The Linux kernel is a free and open-source, monolithic, modular, multitasking, Unix-like operating system kernel.
 
 [download]
-curl -L $URL --output linux-$VERSION.tar.xz
-tar xf linux-$VERSION.tar.xz
+curl -L $URL --output $NAME-$VERSION.tar.xz
+tar xf $NAME-$VERSION.tar.xz
 
 [inputs]
 Do you want to configure your kernel or load a pre-made config? If no, a full generic version will be used otherwise (long install time). (y/n)
