@@ -18,3 +18,5 @@ mv $NAME-$NAME-$VERSION $NAME-$VERSION
 ./configure --prefix=/usr
 make 
 make DESTDIR=$SOVIET_BUILD_DIR install
+# legacy support for pkg-config
+ln -sv pkgconf $SOVIET_BUILD_DIR/usr/bin/pkg-config
