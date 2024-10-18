@@ -13,6 +13,12 @@ curl -L $URL --output $NAME-$VERSION.tar.gz
 tar -xf $NAME-$VERSION.tar.gz
 
 [install]
+# use /usr and /bin merge compatable paths in configs and services
+cp $SOVIET_REPOS_DIR/OUR/base/patch/audit-4.0-executable_paths.patch .
+patch -Np1 -i audit-4.0-executable_paths.patch
+# fix weird issue with autotools and an unneeded header file
+cp $SOVIET_REPOS_DIR/OUR/base/patch/audit-4.0.2-flagtab_h.patch .
+patch -Np1 -i audit-4.0.2-flagtab_h.patch
 autoreconf -fiv
 ./configure --prefix=/usr \
 --libexecdir=/usr/lib/audit \
@@ -22,7 +28,5 @@ autoreconf -fiv
 --with-io_uring \
 --with-python3
 
-# prevent excessive overlinking due to libtool
-sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 make
 make DESTDIR=$SOVIET_BUILD_DIR install
