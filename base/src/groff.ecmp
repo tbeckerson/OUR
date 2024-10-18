@@ -7,7 +7,6 @@ url = https://ftp.gnu.org/gnu/$NAME/$NAME-$VERSION.tar.gz
 sha256 = 6b9757f592b7518b4902eb6af7e54570bdccba37a871fddb2d30ae3863511c13
 
 [description]
-
 groff is a typesetting system that reads plain text input files that include formatting commands to produce output in PostScript, PDF, HTML, or DVI formats or for display to a terminal. Formatting commands can be low-level typesetting primitives, macros from a supplied package, or user-defined macros. All three approaches can be combined.
 
 [download]
@@ -19,8 +18,6 @@ tar -xf $NAME-$VERSION.tar.gz
 
 make 
 make DESTDIR=$SOVIET_BUILD_DIR install
-ls -l $SOVIET_BUILD_DIR/usr/share/groff
-sleep 3
 
 # compatability symlinks
 ln -s eqn $SOVIET_BUILD_DIR/usr/bin/geqn
