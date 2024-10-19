@@ -1,0 +1,28 @@
+[info]
+name = glib
+version = 2.82.2
+type = src
+license = 
+url =  https://download.gnome.org/sources/$NAME/2.82/$NAME-$VERSION.tar.xz
+sha256 = 
+
+[description]
+The GLib package contains low-level libraries useful for providing data structure handling for C, portability wrappers and interfaces for runtime functionality such as an event loop, threads, dynamic loading and an object system. 
+
+[download]
+curl -L $URL --output $NAME-$VERSION.tar.xz
+tar -xf $NAME-$VERSION.tar.xz
+
+[install]
+cp $SOVIET_REPOS_DIR/OUR/patch/$NAME-skip_warnings-1.patch .
+patch -Np1 -i $NAME-skip_warnings-1.patch
+mkdir build
+cd    build
+meson setup ..                  \
+      --prefix=/usr             \
+      --buildtype=release       \
+      -D introspection=disabled \
+      -D glib_debug=disabled    \
+      -D sysprof=disabled
+ninja
+DESTDIR=$SOVIET_BUILD_DIR ninja install
