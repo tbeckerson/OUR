@@ -4,7 +4,7 @@ version = 2024.8.26
 type = src
 license = MIT
 url = https://github.com/erocarrera/pefile/archive/v$VERSION/$NAME-$VERSION.tar.gz
-sda256 = 116ec29b689ea4f0ede7327ebbd794ce8977e5eaa97565393441d3404deecda3
+sha256 = 116ec29b689ea4f0ede7327ebbd794ce8977e5eaa97565393441d3404deecda3
 
 [description]
 The Python Portable Executable (PE) parsing module
