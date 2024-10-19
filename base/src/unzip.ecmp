@@ -15,9 +15,9 @@ tar -xf $NAME$VERSION.tar.gz
 mv $NAME$VERSION $NAME-$VERSION
 
 [install]
-cp $SOVIET_REPOS_DIR/OUR/base/patch/$NAME-$VERSION-consolidated_fixes-1.patch
+cp $SOVIET_REPOS_DIR/OUR/base/patch/$NAME-$VERSION-consolidated_fixes-1.patch .
 patch -Np1 -i unzip-60-consolidated_fixes-1.patch
-cp $SOVIET_REPOS_DIR/OUR/base/patch/$NAME-$VERSION-gcc14-1.patch
+cp $SOVIET_REPOS_DIR/OUR/base/patch/$NAME-$VERSION-gcc14-1.patch .
 patch -Np1 -i unzip-60-gcc14-1.patch
 make -f unix/Makefile generic
 make prefix=/usr \
