@@ -1,0 +1,27 @@
+[info]
+name = procps
+version = 4.0.4
+type = src
+url = https://gitlab.com/$NAME-ng/-/archive/v$VERSION/$NAME-v$VERSION.tar.bz2
+sha256 = 
+
+[description]
+Programs for monitoring processes
+
+[download]
+curl -L $URL --output $NAME-v$VERSION.tar.bz2
+tar -xf $NAME-v$VERSION.tar.bz2
+mv $NAME-v$VERSION $NAME-$VERSION
+
+[install]
+cp $SOVIET_REPOS_DIR/OUR/base/patch/procps-0001-build-sys-Add-systemd-elogind-to-w.patch .
+patch -Np1 -i ./procps-0001-build-sys-Add-systemd-elogind-to-w.patch
+cp $SOVIET_REPOS_DIR/OUR/base/patch/procps-0002-ps-Don-t-crash-when-using-short-option.patch .
+patch -Np1 -i procps-0002-ps-Don-t-crash-when-using-short-option.patch
+
+./configure --prefix=/usr \
+            --disable-static \
+            --disable-kill \
+            --with-systemd
+make
+make DESTDIR=$SOVIET_BUILD_DIR install
